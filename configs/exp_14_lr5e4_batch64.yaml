@@ -1,0 +1,27 @@
+# exp_14 — Higher lr (0.0005) + batch=64
+# Change vs exp_11: lr 0.00025 → 0.0005
+# Hypothesis: batch=64 stabilised lr=0.00025 completely (0% spikes). Can we
+# double the lr and learn twice as fast while the larger batch keeps it stable?
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.05
+eps_anneal_steps: 1_000_000
+eps_eval: 0.05
+lr: 0.0005
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+eval_freq_steps: 10_000
+eval_episodes: 5
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

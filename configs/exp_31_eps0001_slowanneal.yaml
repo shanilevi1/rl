@@ -1,0 +1,28 @@
+# exp_31 — eps_end=0.001 + eps_anneal=2M + batch=64
+# At eps_anneal=1M, the agent is near-greedy from step 1M and peaks at 2-3.4M.
+# Extending anneal to 2M means the agent keeps exploring until step 2M before
+# committing to near-greedy exploitation. Hypothesis: longer policy maturation
+# before going greedy → higher, later peak; less early lock-in of mediocre behavior.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 2_000_000
+eps_eval: 0.001
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+eval_freq_steps: 10_000
+eval_episodes: 50
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

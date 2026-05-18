@@ -1,0 +1,41 @@
+# exp_58 — gamma=0.97 + min_replay_size=100k + use_best_checkpoint_eval + lr_decay@3M
+# Identical to exp_56 except min_replay_size: 50k → 100k.
+# Core problem: seed 0 (and sometimes seed 2) consistently gets stuck in a bad local
+# optimum during the 250k exploration window, peaking at only ~1000 reward while lucky
+# seeds reach 4000+. Pattern holds across exp_42, exp_53, exp_54, exp_56 — s0 is
+# always the weakest seed.
+# Hypothesis: with only 50k steps of random experience before the first gradient update,
+# Q-values are calibrated on a narrow, potentially biased sample. Doubling to 100k gives
+# the replay buffer a much more diverse baseline — the agent sees more game states, action
+# outcomes, and reward signals before committing to any Q-value estimates. This broader
+# foundation should make unlucky seeds less likely to lock in bad initial policies.
+# min_replay_size is the last unexplored config-only lever directly targeting this problem.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 100_000
+update_freq: 4
+gamma: 0.97
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+lr_decay_start_step: 3_000_000
+lr_min: 0.0
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+use_best_checkpoint_eval: true
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

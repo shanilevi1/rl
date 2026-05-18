@@ -1,0 +1,28 @@
+# exp_13 — Smaller frame skip (2)
+# Change vs base: frame_skip 4 → 2, update_freq 4 → 2
+# update_freq halved to keep training once per agent action (same as base).
+# Hypothesis: finer-grained action control — the agent reacts every 2 frames
+# instead of 4, which may help in fast-moving scenarios. Doubles the number
+# of agent decisions per 5M actual frames.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 2
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 2
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.05
+eps_anneal_steps: 1_000_000
+eps_eval: 0.05
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 32
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+eval_freq_steps: 10_000
+eval_episodes: 5
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

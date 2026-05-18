@@ -1,0 +1,12 @@
+# Wandb logs
+wandb/
+
+# Slurm output logs
+slurm-*.out
+
+# Setup logs
+setup_env.log
+setup_env.err
+
+# Run output directories
+runs/

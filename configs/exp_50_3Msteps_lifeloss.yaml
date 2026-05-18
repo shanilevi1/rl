@@ -1,0 +1,32 @@
+# exp_50 — total_steps=3M + fast_anneal_250k + life_loss_terminal
+# Identical to exp_42 except total_steps: 5M → 3M.
+# Hypothesis: exp_42 peaks in the sweet zone (s0 at 2.8M, s2 at 3.4M) but collapse
+# erases the gains by step 5M. Stopping at 3M catches both seeds near/at their peaks
+# before the bootstrap loop has time to diverge: s0 reward≈782 at 3M, s2 reward≈1258 at 3.4M.
+# The 100-episode final eval at 3M should capture a policy still in the sweet zone.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 3_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

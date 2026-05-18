@@ -1,0 +1,32 @@
+# exp_49 — eps_end=0.005 + fast_anneal_250k + life_loss_terminal
+# Identical to exp_42 except eps_end: 0.001 → 0.005 (and eps_eval to match).
+# Hypothesis: eps=0.001 (1 random/1000 steps) commits too rigidly after 250k — lucky seeds
+# lock in a great policy (s2=825), unlucky seeds lock in a bad one (s0=328), avg=577 but
+# std=352. eps=0.005 (1 random/200 steps) keeps 5x more exploratory noise during exploitation:
+# bad seeds can partially recover, good seeds stay good → tighter distribution, higher avg.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.005
+eps_anneal_steps: 250_000
+eps_eval: 0.005
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

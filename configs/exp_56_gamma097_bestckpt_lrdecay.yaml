@@ -1,0 +1,38 @@
+# exp_56 — gamma=0.97 + use_best_checkpoint_eval + lr_decay@3M
+# exp_46 (gamma=0.97) was ruled a "dead end" because its final_100ep avg at 5M was 338.9.
+# But exp_46_s2 peaked at 4050 (single-ep) at step 3.08M — the highest peak EVER seen.
+# The collapse erased it by 5M. With use_best_checkpoint_eval, we capture that peak.
+# gamma=0.97 produces higher and faster peaks (shorter bootstrap horizon = faster convergence)
+# at the cost of faster collapse. With best_ckpt_eval + lr_warmdown, neither matters:
+# - best_ckpt captures the peak regardless of collapse
+# - lr_warmdown slows the collapse, giving more time to peak higher
+# This makes gamma=0.97 a candidate for the 3000 bonus.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.97
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+lr_decay_start_step: 3_000_000
+lr_min: 0.0
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+use_best_checkpoint_eval: true
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

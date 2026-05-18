@@ -1,0 +1,37 @@
+# exp_53 — lr_warmdown from step 3M + use_best_checkpoint_eval + fast_anneal_250k + life_loss
+# Identical to exp_52 except lr decays linearly from 0.00025 → 0 starting at step 3M.
+# Hypothesis: the collapse is driven by large lr updates once Q-values start diverging.
+# exp_42 peaks at 2.8–3.4M. After the peak, lr=0.00025 keeps amplifying the divergence.
+# Decaying lr to 0 over the last 2M steps (3M→5M) should slow the collapse rate proportionally.
+# Combined with use_best_checkpoint_eval: even if lr_warmdown fails to prevent collapse,
+# we capture the peak checkpoint for final eval.
+# This combination directly addresses the core problem from two angles simultaneously.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+lr_decay_start_step: 3_000_000
+lr_min: 0.0
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+use_best_checkpoint_eval: true
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

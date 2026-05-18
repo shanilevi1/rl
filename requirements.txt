@@ -1,0 +1,8 @@
+torch>=2.0.0
+gymnasium[atari,accept-rom-license]
+ale-py
+opencv-python-headless
+numpy
+wandb
+pyyaml
+tqdm

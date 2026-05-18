@@ -1,0 +1,32 @@
+# exp_51 — total_steps=2M + fast_anneal_250k + life_loss_terminal
+# Identical to exp_42 except total_steps: 5M → 2M.
+# Hypothesis: stopping even earlier, well before the collapse. exp_42 s0 is pre-peak
+# at 2M (reward≈480-723) and s2 is also pre-peak (reward≈158-211). Policy is still
+# actively learning but hasn't started diverging. If the 100-episode eval at 2M is
+# already reasonable, this confirms the collapse is the primary bottleneck, not exploration.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 2_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

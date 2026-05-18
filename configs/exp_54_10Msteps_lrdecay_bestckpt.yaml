@@ -1,0 +1,39 @@
+# exp_54 — total_steps=10M + lr_decay@3M + use_best_checkpoint_eval
+# Identical to exp_53 except total_steps: 5M → 10M.
+# Rationale: in exp_53 all seeds peaked DURING the warmdown phase (3.2–3.7M steps).
+# With 7M of warmdown (3M→10M) instead of 2M, the lr decays much more slowly:
+#   step 5M: lr ≈ 0.000178  (71% of full lr — still learning meaningfully)
+#   step 7M: lr ≈ 0.000107  (still 43% — slower, stable updates)
+#   step 10M: lr = 0.0
+# This gives the agent 7M steps to consolidate at gradually decreasing update rates.
+# With best_ckpt_eval, the peak at any step from 3M–10M is captured.
+# B200 speed: 5M steps = 54 min, so 10M ≈ 108 min — well within 48h SLURM limit.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 10_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+lr_decay_start_step: 3_000_000
+lr_min: 0.0
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+use_best_checkpoint_eval: true
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

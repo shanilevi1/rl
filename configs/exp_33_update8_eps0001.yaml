@@ -1,0 +1,28 @@
+# exp_33 — update_freq=8 + eps_end=0.001 + batch=64
+# Currently we do 1 gradient update every 4 env steps. Halving to every 8 steps means
+# the Q-network updates more slowly → targets drift more slowly → the self-referential
+# bootstrap loop (q ≈ target) accumulates instability more gradually.
+# Hypothesis: slower Q-drift extends the high-performance window past the 2-3M peak.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 8
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 1_000_000
+eps_eval: 0.001
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+eval_freq_steps: 10_000
+eval_episodes: 50
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

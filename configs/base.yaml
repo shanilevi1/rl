@@ -1,0 +1,42 @@
+# ── Environment ───────────────────────────────────────────────────────────────
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+
+# ── Training ──────────────────────────────────────────────────────────────────
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+
+# ── Epsilon schedule ──────────────────────────────────────────────────────────
+eps_start: 1.0
+eps_end: 0.05
+eps_anneal_steps: 1_000_000
+eps_eval: 0.05
+
+# ── Network / Optimizer ───────────────────────────────────────────────────────
+lr: 0.00025  # 25e-5 — matches notebook
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 32
+
+# ── Replay buffer ─────────────────────────────────────────────────────────────
+replay_buffer_capacity: 1_000_000
+
+# ── Stability ─────────────────────────────────────────────────────────────────
+grad_clip: 0.0   # 0 = disabled (paper setting)
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100   # primary agent metric: mean reward over 100 eps at end of training
+
+# ── Checkpointing ─────────────────────────────────────────────────────────────
+checkpoint_freq_steps: 500_000
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+wandb_project: "dqn-alien"
+
+# ── GPU ───────────────────────────────────────────────────────────────────────
+device: "cuda"
+use_amp: true

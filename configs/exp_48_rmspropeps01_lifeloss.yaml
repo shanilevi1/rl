@@ -1,0 +1,34 @@
+# exp_48 — rmsprop_eps=0.1 + fast_anneal_250k + life_loss_terminal
+# Identical to exp_42 except rmsprop_eps: 0.01 → 0.1.
+# Hypothesis: RMSprop update = lr * g / (sqrt(v) + eps). In late training the policy is
+# near-greedy so gradients g are small → sqrt(v) ≈ small → eps dominates denominator.
+# With eps=0.1 (vs 0.01), the effective step size shrinks 10x when gradients are small.
+# This specifically dampens Q-value updates in the post-peak collapse phase,
+# without slowing early exploration (when gradients are large and sqrt(v) >> eps).
+# gamma=0.99 confirmed optimal (exp_46 showed gamma=0.97 worsens collapse 7x).
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.001
+eps_anneal_steps: 250_000
+eps_eval: 0.001
+lr: 0.00025
+rmsprop_eps: 0.1
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+life_loss_terminal: true
+noop_max: 0
+eval_freq_steps: 10_000
+eval_episodes: 1
+final_eval_episodes: 100
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

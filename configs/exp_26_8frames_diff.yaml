@@ -1,0 +1,29 @@
+# exp_26 — 8 diff frames + batch=64 + eps_end=0.005
+# Change: num_frames=8 + frame_stack_mode=diff
+# Combines exp_24 (motion encoding) and exp_25 (more temporal context).
+# 8 consecutive frame differences give both velocity AND acceleration signals.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 5_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.005
+eps_anneal_steps: 1_000_000
+eps_eval: 0.005
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+num_frames: 8
+frame_stack_mode: "diff"
+eval_freq_steps: 10_000
+eval_episodes: 5
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true

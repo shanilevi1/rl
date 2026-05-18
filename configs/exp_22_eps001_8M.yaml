@@ -1,0 +1,26 @@
+# exp_22 — eps_end=0.01 + 8M steps + batch=64
+# exp_18_s0 still had last_eval=718 at step 4.4M and was clearly still improving.
+# Hypothesis: doubling training time lets the agent keep refining beyond 5M.
+ale_game_id: "ALE/Alien-v5"
+frame_skip: 4
+total_steps: 8_000_000
+min_replay_size: 50_000
+update_freq: 4
+gamma: 0.99
+eps_start: 1.0
+eps_end: 0.01
+eps_anneal_steps: 1_000_000
+eps_eval: 0.01
+lr: 0.00025
+rmsprop_eps: 0.01
+rmsprop_alpha: 0.95
+batch_size: 64
+replay_buffer_capacity: 1_000_000
+grad_clip: 0.0
+loss_fn: "mse"
+eval_freq_steps: 10_000
+eval_episodes: 5
+checkpoint_freq_steps: 500_000
+wandb_project: "dqn-alien"
+device: "cuda"
+use_amp: true
