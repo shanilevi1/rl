@@ -1,0 +1,19 @@
+\contentsline {section}{\numberline {1}Game Choice}{2}{section.1}%
+\contentsline {section}{\numberline {2}Preprocessing}{2}{section.2}%
+\contentsline {section}{\numberline {3}Network Architecture}{2}{section.3}%
+\contentsline {section}{\numberline {4}Final Hyperparameters}{3}{section.4}%
+\contentsline {paragraph}{Key deviations from paper defaults.}{3}{section*.3}%
+\contentsline {section}{\numberline {5}Training Protocol}{3}{section.5}%
+\contentsline {section}{\numberline {6}Training Curves}{4}{section.6}%
+\contentsline {section}{\numberline {7}Final Results}{5}{section.7}%
+\contentsline {section}{\numberline {8}What Worked}{5}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Life-loss terminal signal}{5}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Fast epsilon annealing (250k steps)}{5}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Lower discount factor ($\gamma = 0.97$)}{5}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}LR warmdown (lr\_decay\_start\_step = 3M)}{5}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Best-checkpoint evaluation (use\_best\_checkpoint\_eval)}{6}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Stable learning-rate regime}{6}{subsection.8.6}%
+\contentsline {section}{\numberline {9}What Did Not Work}{6}{section.9}%
+\contentsline {subsection}{\numberline {9.1}The post-peak collapse problem}{6}{subsection.9.1}%
+\contentsline {section}{\numberline {10}Implementation Notes}{7}{section.10}%
+\contentsline {section}{\numberline {11}Conclusion}{7}{section.11}%
